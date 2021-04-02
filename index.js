@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const PubSub = require("@google-cloud/pubsub");
+const { PubSub } = require("@google-cloud/pubsub");
 
 const server = express();
 server.use(bodyParser.urlencoded({ extended: true }));
@@ -57,7 +57,7 @@ server.post("/test", async (req, res) => {
   publishMessage({
     data: {
       firstName: "Jude",
-      lastName: "Okafor",
+      lastName: "Okafor .c.",
       adress: "Kubwa",
     },
     topic: "send-my-messsage",
@@ -69,7 +69,7 @@ server.post("/test", async (req, res) => {
   });
 });
 
-//Secheduler Endpoint.
+//Secheduler Endpoint....
 server.post("/scheduler", async (req, res) => {
   console.log("Scheduler called");
 
@@ -90,7 +90,7 @@ server.post("/message", readPublished, async (req, res) => {
   });
 });
 
-//Start Server Here!!!
+//Start Server Here!!!!!!
 server.listen(process.env.PORT || 8584, () => {
   console.log(`Server started at port :8584`);
 });
