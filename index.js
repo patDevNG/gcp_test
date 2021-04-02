@@ -25,6 +25,31 @@ async function publishMessage(payload) {
   return messageId;
 }
 
+const readPublished = (req, res, next) => {
+  if (!req.body) {
+    const msg = "no Pub/Sub message received";
+    console.error(`error: ${msg}`);
+    return res.status(400).send(`Bad Request: ${msg}`);
+  }
+
+  if (!req.body.message) {
+    const msg = "invalid Pub/Sub message format";
+    console.error(`error: ${msg}`);
+    return res.status(400).send(`Bad Request: ${msg}`);
+  }
+
+  if (req.body.message.data) {
+    const pubSubMessageData = Buffer.from(
+      req.body.message.data,
+      "base64"
+    ).toString();
+    const messageId = req.body.message.messageId;
+    req.body = JSON.parse(pubSubMessageData);
+    req.body.messageId = messageId;
+  }
+  return next();
+};
+
 // Test Endpoint
 server.post("/test", async (req, res) => {
   const result = req.body;
@@ -52,31 +77,6 @@ server.post("/scheduler", async (req, res) => {
     message: "Successful",
   });
 });
-
-const readPublished = (req, res, next) => {
-  if (!req.body) {
-    const msg = "no Pub/Sub message received";
-    console.error(`error: ${msg}`);
-    return res.status(400).send(`Bad Request: ${msg}`);
-  }
-
-  if (!req.body.message) {
-    const msg = "invalid Pub/Sub message format";
-    console.error(`error: ${msg}`);
-    return res.status(400).send(`Bad Request: ${msg}`);
-  }
-
-  if (req.body.message.data) {
-    const pubSubMessageData = Buffer.from(
-      req.body.message?.data,
-      "base64"
-    ).toString();
-    const messageId = req.body.message?.messageId;
-    req.body = JSON.parse(pubSubMessageData);
-    req.body.messageId = messageId;
-  }
-  return next();
-};
 
 // Message Endpoint
 server.post("/message", readPublished, async (req, res) => {
