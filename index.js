@@ -10,10 +10,11 @@ server.use(bodyParser.json());
 server.post('/test', async(req,res)=>{
     const result = req.body;
     res.status(200).json({
-        message:"Successful",
+        message:"Successful Sent",
         data:result
     })
 })
+
 
 server.listen(process.env.PORT || 8584, ()=>{
     console.log(`Server started at port :8584`);
