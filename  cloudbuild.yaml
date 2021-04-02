@@ -9,12 +9,6 @@ steps:
     - "_PROJECT_ID=$_PROJECT_ID"
     - "_REGION=$_REGION"
     - "_IMAGE=$_IMAGE"
-    - "_SMS_SOLUTION_API=$_SMS_SOLUTION_API"
-    - "_SMART_SMS_URL=$_SMART_SMS_URL"
-    - "_SMART_SMS_SERVER_TOKEN=$_SMART_SMS_SERVER_TOKEN"
-    - "_AFRICA_TALKING_API_KEY=$_AFRICA_TALKING_API_KEY"
-    - "_AFRICA_TALKING_USERNAME=$_AFRICA_TALKING_USERNAME"
-    - "_CLIENT_APP_URL=$_CLIENT_APP_URL"
 
   # Build the container image
 - name: "gcr.io/cloud-builders/docker"
@@ -47,6 +41,6 @@ steps:
   - "--platform"
   - "managed"
   - "--allow-unauthenticated"
-  
+
 images:
 - gcr.io/$_PROJECT_ID/$_IMAGE
